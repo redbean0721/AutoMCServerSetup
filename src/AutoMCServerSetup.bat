@@ -1,5 +1,5 @@
 echo off
-set version=v1.0
+set version=v1.1.0
 
 rem
 title Minecraft 一件開服小工具
@@ -35,25 +35,37 @@ echo:
 
 ping 127.0.0.1 -n 2 > nul
 
-set java_path="C:\Program Files\Java"
-if exist %java_path% (
+java -version > nul 2>&1
+if errorlevel 1 (
+  echo:
+  echo:                                       ERROR
+  echo:
+  echo:
+  echo                                 你沒有安裝 Java JDK
+  echo:
+  echo                           請到以下網址下載並安裝 Java JDK:
+  echo                 https://www.oracle.com/tw/java/technologies/downloads/
+  echo:
+  echo:
+  pause
+  exit
+) else (
   echo                                  Java...... 已安裝
-  ) else (
-    echo:
-    echo:                                       ERROR
-    echo:
-    echo:
-    echo                                 你沒有安裝 Java JDK
-    echo:
-    echo                           請到以下網址下載並安裝 Java JDK:
-    echo                 https://www.oracle.com/tw/java/technologies/downloads/
-    echo:
-    echo:
-    pause
-    exit
-    )
+)
 
-ping 127.0.0.1 -n 1 > nul
+dir /b /a-d | findstr /v /c:"%~nx0" > nul && (
+  echo:
+  echo                            此資料夾中還有其他檔案或資料夾
+  echo                               請在乾淨的資料夾內執行
+  echo:
+  echo:
+  pause
+  exit
+)
+echo:
+echo                                    此為空資料夾
+
+ping 127.0.0.1 -n 2 > nul
 echo:
 echo:
 echo                                      檢查完成:)
